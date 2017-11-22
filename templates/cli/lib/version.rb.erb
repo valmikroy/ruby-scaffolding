@@ -1,0 +1,15 @@
+require '<%= snake_name %>'
+
+module <%= camel_name %> # :nodoc:
+
+  f = File.expand_path('../../../VERSION', __FILE__)
+
+  VERSION = '0.0.1'
+
+  if File.exist?(f)
+   VERSION = IO.read(f).freeze
+   <%= camel_name %>.logger.info("VERSION file present with #{VERSION}")
+  else
+   <%= camel_name %>.logger.info("choosing default version #{VERSION}")
+  end
+end

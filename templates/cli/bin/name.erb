@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+Signal.trap('INT') { exit 1 }
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), %w(.. lib))
+
+require 'rubygems'
+require '<%= snake_name %>/cli'
+
+<%= camel_name %>::CLI.start(ARGV)

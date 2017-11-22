@@ -1,0 +1,13 @@
+require_relative '../../spec/spec_helper'
+require '<%= snake_name %>/cli'
+require '<%= snake_name %>/cli/command'
+
+describe 'Command' do
+  subject(:c) do
+    <%= camel_name %>::CLI::Command.new(%w[a1','a1], dryrun: true)
+  end
+
+  it '#call' do
+    expect(c.call).to eq(true)
+  end
+end

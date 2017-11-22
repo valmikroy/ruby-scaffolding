@@ -1,0 +1,77 @@
+require 'thor'
+require '<%= snake_name %>'
+
+module <%= camel_name %> # :nodoc:
+  module Helper
+    def exec_cmd(task, test_name, options)
+      opt = options.dup.each_with_object({}) { |(k, v), o| o[k.to_sym] = v; o }
+      @config = {} if @config.nil?
+      @config[:verbose] = opt.fetch(:verbose) { <%= camel_name %>.verbose }
+      <%= camel_name %>.verbose = @config[:verbose]
+      <%= camel_name %>.logger = <%= camel_name %>.default_logger
+      options = @config.merge(opt)
+
+      require "<%= snake_name %>/cli/#{task}"
+
+      klass_name = '<%= camel_name %>::CLI::' + task.capitalize
+      klass = Object.const_get(klass_name)
+
+      klass.new(test_name, options).call
+    end
+  end
+
+  class CLI < Thor
+    include <%= camel_name %>::Helper
+
+    # Config options of each run held by this variable
+    attr_reader :config
+
+    # hash to hold options for changing them to symbol hash
+    # in option_key_to_sym!
+    attr_accessor :opt
+
+    def initialize(*args)
+
+      # Failing apologetically for more than single parameters
+      if args[0].length > 1
+        first = args[0].shift
+        ignored = args[0].join(',')
+        args[0] = [ first ]
+        <%= camel_name %>.logger.warn("Ignored extra parameters #{ignored}")
+      end
+
+      super
+      $stdout.sync = true
+      @config = {}
+    end
+
+    # common options which required for all commands
+    # this might need yamas server params in future
+    def self.global_options
+      method_option :verbose,
+                    aliases: ['-v', '--verbose'],
+                    desc: 'Turn on verbosity , default: false',
+                    type: :boolean,
+                    default: false
+
+      method_option :dry,
+                   aliases: ['-d', '--dry'],
+                    desc: 'Dry run, default: false',
+                    type: :boolean,
+                    default: false
+
+      method_option :example_option,
+                    aliases: ['-e', '--example_option'],
+                    desc: 'Specifications dir, default: <%= snake_name %>_default_value',
+                    type: :string,
+                    default: '<%= snake_name %>_default_value'
+    end
+
+    desc 'command <command arg>', 'Example command'
+    global_options
+    def command(command_arg)
+      exec_cmd('command',command_arg, options)
+    end
+
+  end
+end

@@ -1,0 +1,12 @@
+require 'spec_helper'
+
+include <%= camel_name %>::Helper
+
+describe 'sample test' do
+  it 'simple test case' do
+    expect(render_tmpl(['a:b:c', 'e:f:g'], IO.read("#{<%= camel_name %>.source_root}/spec/resources/sample.erb"))).to eq('<servers>
+                    <server host="a" port="b" type="c"/>
+                    <server host="e" port="f" type="g"/>
+  </servers>')
+  end
+end

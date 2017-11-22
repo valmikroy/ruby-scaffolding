@@ -1,0 +1,26 @@
+require '<%= snake_name %>'
+require '<%= snake_name %>/helper'
+require 'rspec'
+
+include <%= camel_name %>::Helper
+
+module <%= camel_name %>
+  class CLI
+    class Command
+      attr_reader :options
+
+
+      def initialize(command_arg, options = {})
+        @options = options
+        <%= camel_name %>.logger.info("Command argument is #{command_arg}")
+      end
+
+      def call
+        <%= camel_name %>.logger.info('Verify executed')
+        <%= camel_name %>.logger.info("Example option is #{@options[:example_option]}")
+      end
+
+
+    end
+  end
+end

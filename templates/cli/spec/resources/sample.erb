@@ -1,0 +1,7 @@
+<servers>
+  <%@data.each do |s|-%>
+      <%@server, @port, @type = s.split(':')-%>
+      <%raise "Provide port for test host #{@server} in host:port format" if @port.nil?-%>
+      <server host="<%=@server%>" port="<%=@port%>" type="<%=@type%>"/>
+  <% end -%>
+</servers>

@@ -1,0 +1,79 @@
+require 'mixlib/shellout'
+require 'erb'
+require '<%= snake_name %>'
+require 'yaml'
+
+module <%= camel_name %> # :nodoc:
+  module Helper # :nodoc
+    # Templating functions which wrapped under render_tmpl()
+    class Template
+      include ERB::Util
+      attr_accessor :data, :template
+      def initialize(data, template)
+        @data = data
+        @template = template
+      end
+
+      def render
+        ERB.new(@template, nil, '-').result(binding)
+      end
+
+      def save(file)
+        File.open(file, 'w+') { |f| f.write(render) }
+      end
+    end
+
+    module Shell
+      def shellout!(*c)
+        cmd = Mixlib::ShellOut.new(*c)
+        <%= camel_name %>.logger.debug(c)
+        cmd.timeout = 3600
+        cmd.run_command
+        cmd.error! # raises exception which will stop execution
+        cmd.stdout
+      end
+
+      # Do you know FileUtils demands imagemagik as dependency ?
+      def mkdir(path)
+        return if Dir.exist?(path)
+        shellout!("mkdir -p #{path}")
+      end
+
+      def file_cp(src, dst)
+        raise "#{src} does not exists" unless File.exist?(src)
+        shellout!("cp #{src}  #{dst}")
+      end
+
+      def dir_exist(dir)
+        return dir if Dir.exists?(dir)
+        raise "#{dir} does not exists"
+      end
+
+      def bin_exist(bin)
+        return bin if File.executable?(bin)
+        raise "#{bin} does not exists"
+      end
+
+      def which(name)
+        shellout!("which #{name}").chomp
+      end
+
+      def exception
+        out = ''
+        begin
+          out = yield
+        rescue Exception => e
+          <%= camel_name %>.logger.error(e.message)
+          return nil
+        end
+        out
+      end
+    end
+
+    def render_tmpl(data, template)
+      e = <%= camel_name %>::Helper::Template.new(data, template)
+      e.render
+    end
+
+  end
+end
