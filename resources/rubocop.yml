@@ -29,6 +29,10 @@ Style/FormatStringToken:
   Exclude:
     - spec/**/*
 
+Style/IndentHeredoc:
+  Exclude:
+    - '*.gemspec'
+
 Layout/EndOfLine:
   EnforcedStyle: lf
 
