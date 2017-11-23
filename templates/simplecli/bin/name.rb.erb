@@ -1,0 +1,106 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+require 'logger'
+
+module <%= camel_name %> # :nodoc:
+  # Singleton
+  class << self
+    attr_accessor :logger
+    attr_accessor :verbose
+
+    def dry?
+      ENV['DRY'] ? true : false
+    end
+
+    def default_logger
+      v = <%= camel_name %>.verbose
+      logger = Logger.new(STDOUT)
+      logger.level = Logger::INFO
+      logger.level = Logger::DEBUG if v
+      logger
+    end
+
+    def tty?
+      $stdout.tty?
+    end
+  end
+
+  # Helpers
+  module Helper
+    def func1(j)
+      <%= camel_name %>.logger.info("Default logging test - #{j}")
+      <%= camel_name %>.logger.debug("debug/verbose logging test - #{j}")
+      func2(j) + 2
+    end
+
+    def func2(i)
+      <%= camel_name %>.logger.info("Default logging test - #{i}")
+      <%= camel_name %>.logger.debug("debug/verbose logging test - #{i}")
+      i + 1
+    end
+
+    def start
+      puts func1(4)
+      puts func2(5)
+    end
+
+    module HTTP
+
+      def http_fetch(u)
+        uri = URI(u)
+        req = Net::HTTP::Get.new(uri)
+        res = Net::HTTP.start(uri.hostname, uri.port ) do |http|
+          http.request(req)
+        end
+        JSON.parse(res.body, symbolize_names: true )
+      end
+
+    end
+  end
+
+  # CLI
+  class CLI < Thor
+    include Helper
+
+    def self.global_options
+      method_option :verbose,
+                    aliases: ['-v', '--verbose'],
+                    desc: 'Verbose',
+                    type: :boolean,
+                    default: false
+    end
+
+    desc 'wrapfunc1', 'Wrapper Function One'
+    global_options
+    def wrapfunc1
+      <%= camel_name %>.verbose = options[:verbose]
+      <%= camel_name %>.logger = <%= camel_name %>.send(:default_logger)
+      puts func1(40)
+    end
+
+    desc 'wrapfunc2', 'Wrapper Function Two'
+    global_options
+    def wrapfunc2
+      <%= camel_name %>.verbose = options[:verbose]
+      <%= camel_name %>.logger = <%= camel_name %>.send(:default_logger)
+      puts func2(50)
+    end
+
+    desc 'start', 'Wrap both function one and two'
+    global_options
+    def start
+      <%= camel_name %>.verbose = options[:verbose]
+      <%= camel_name %>.logger = <%= camel_name %>.send(:default_logger)
+      puts func1(40)
+      puts func2(50)
+    end
+  end
+end
+
+
+<%= camel_name %>.verbose = ENV['VERBOSE'] ? true : false
+<%= camel_name %>.logger = <%= camel_name %>.default_logger
+
+
+<%= camel_name %>::CLI.start(ARGV) if $PROGRAM_NAME == __FILE__

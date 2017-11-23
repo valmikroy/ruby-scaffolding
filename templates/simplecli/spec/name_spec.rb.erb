@@ -1,0 +1,16 @@
+require 'spec_helper'
+
+include <%= camel_name %>::Helper
+
+describe '#func1' do
+  it 'test func' do
+    expect(func1(5)).to eq(8)
+  end
+end
+
+describe '#func1' do
+  it 'test func' do
+    allow_any_instance_of(Object).to receive(:func2).with(5).and_return(7)
+    expect(func1(5)).to eq(9)
+  end
+end

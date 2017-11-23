@@ -3,6 +3,7 @@
 require 'thor'
 require 'scaffold'
 require 'scaffold/generator/cli'
+require 'scaffold/generator/simplecli'
 require 'scaffold/version'
 
 module Scaffold
@@ -23,5 +24,10 @@ module Scaffold
 
     register(Generator::Cli, 'cli', 'cli NAME', 'Initialize a new CLI project')
     Cli.tasks['cli'].options = Generator::Cli.class_options
+
+    register(Generator::Cli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
+    Cli.tasks['simplecli'].options = Generator::Cli.class_options
+
   end
+
 end

@@ -70,6 +70,19 @@ module <%= camel_name %> # :nodoc:
       end
     end
 
+    module HTTP
+
+      def http_fetch(u)
+        uri = URI(u)
+        req = Net::HTTP::Get.new(uri)
+        res = Net::HTTP.start(uri.hostname, uri.port ) do |http|
+          http.request(req)
+        end
+        JSON.parse(res.body, symbolize_names: true )
+      end
+
+    end
+
     def render_tmpl(data, template)
       e = <%= camel_name %>::Helper::Template.new(data, template)
       e.render
