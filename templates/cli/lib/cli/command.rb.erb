@@ -18,6 +18,9 @@ module <%= camel_name %>
       def call
         <%= camel_name %>.logger.info('Verify executed')
         <%= camel_name %>.logger.info("Example option is #{@options[:example_option]}")
+        <%= camel_name %>.logger.debug("Verbose options is #{@options[:verbose]}")
+        <%= camel_name %>.logger.info("Dry options is #{@options[:dry]}") if <%= camel_name %>.dry
+        true
       end
 
 

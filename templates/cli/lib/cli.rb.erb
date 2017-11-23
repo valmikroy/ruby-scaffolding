@@ -4,11 +4,20 @@ require '<%= snake_name %>'
 module <%= camel_name %> # :nodoc:
   module Helper
     def exec_cmd(task, test_name, options)
+      # convert each key to symbol
       opt = options.dup.each_with_object({}) { |(k, v), o| o[k.to_sym] = v; o }
+
+      # setup verbose
       @config = {} if @config.nil?
       @config[:verbose] = opt.fetch(:verbose) { <%= camel_name %>.verbose }
       <%= camel_name %>.verbose = @config[:verbose]
       <%= camel_name %>.logger = <%= camel_name %>.default_logger
+
+      # setup dryrun
+      @config[:dry] = opt.fetch(:dry) { <%= camel_name %>.dry }
+      <%= camel_name %>.dry = @config[:dry]
+
+
       options = @config.merge(opt)
 
       require "<%= snake_name %>/cli/#{task}"
