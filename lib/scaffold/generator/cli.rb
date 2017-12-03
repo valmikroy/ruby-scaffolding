@@ -47,8 +47,7 @@ module Scaffold
         template('spec/sample_spec.rb.erb', "#{target_path}/spec/sample_spec.rb", template_options)
         template('spec/cli/command_spec.rb.erb', "#{target_path}/spec/cli/command_spec.rb", template_options)
 
-
-        #copy_file("#{Scaffold.source_root}/templates/cli/spec/resources/sample.erb", "#{target_path}/spec/resources/sample.erb")
+        # copy_file("#{Scaffold.source_root}/templates/cli/spec/resources/sample.erb", "#{target_path}/spec/resources/sample.erb")
         copy_file("#{Cli.source_root}/spec/resources/sample.erb", "#{target_path}/spec/resources/sample.erb")
         copy_file("#{Cli.source_root}/Gemfile", "#{target_path}/Gemfile")
         copy_file("#{Cli.source_root}/gitignore", "#{target_path}/.gitignore")
@@ -56,13 +55,7 @@ module Scaffold
         create_file("#{target_path}/.rubocop_todo.yml")
         copy_file("#{Cli.source_root}/Rakefile", "#{target_path}/Rakefile")
 
-
-
-
         copy_file("#{Scaffold.source_root}/resources/LICENSE", "#{target_path}/LICENSE")
-
-
-
       end
 
       private

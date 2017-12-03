@@ -27,7 +27,5 @@ module Scaffold
 
     register(Generator::Simplecli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
     CLI.tasks['simplecli'].options = Generator::Simplecli.class_options
-
   end
-
 end

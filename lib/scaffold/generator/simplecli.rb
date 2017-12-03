@@ -35,7 +35,6 @@ module Scaffold
         template('bin/name.rb.erb', "#{target_path}/bin/#{snake_name}.rb", template_options)
         File.chmod(0o755, "#{target_path}/bin/#{snake_name}.rb")
 
-
         template('spec/spec_helper.rb.erb', "#{target_path}/spec/spec_helper.rb", template_options)
         template('spec/name_spec.rb.erb', "#{target_path}/spec/#{snake_name}_spec.rb", template_options)
 
@@ -44,7 +43,6 @@ module Scaffold
         copy_file("#{Simplecli.source_root}/rubocop.yml", "#{target_path}/.rubocop.yml")
         create_file("#{target_path}/.rubocop_todo.yml")
         copy_file("#{Simplecli.source_root}/Rakefile", "#{target_path}/Rakefile")
-
 
         copy_file("#{Scaffold.source_root}/resources/LICENSE", "#{target_path}/LICENSE")
       end
