@@ -1,9 +1,0 @@
-# frozen_string_literal: true
-
-module <%= camel_name %>
-  class Health < Grape::API
-    get '/health' do
-      ok "Health ok with debug param #{params[:debug]}"
-    end
-  end
-end
