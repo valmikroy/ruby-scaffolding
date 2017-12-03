@@ -7,7 +7,7 @@ require 'scaffold/generator/simplecli'
 require 'scaffold/version'
 
 module Scaffold
-  class Cli < Thor
+  class CLI < Thor
     check_unknown_options!
     class_option 'verbose', type: :boolean, default: false
 
@@ -23,10 +23,10 @@ module Scaffold
     end
 
     register(Generator::Cli, 'cli', 'cli NAME', 'Initialize a new CLI project')
-    Cli.tasks['cli'].options = Generator::Cli.class_options
+    CLI.tasks['cli'].options = Generator::Cli.class_options
 
-    register(Generator::Cli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
-    Cli.tasks['simplecli'].options = Generator::Cli.class_options
+    register(Generator::Simplecli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
+    CLI.tasks['simplecli'].options = Generator::Simplecli.class_options
 
   end
 
