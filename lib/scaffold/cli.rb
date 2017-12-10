@@ -4,6 +4,7 @@ require 'thor'
 require 'scaffold'
 require 'scaffold/generator/cli'
 require 'scaffold/generator/simplecli'
+require 'scaffold/generator/microservice'
 require 'scaffold/version'
 
 module Scaffold
@@ -27,5 +28,8 @@ module Scaffold
 
     register(Generator::Simplecli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
     CLI.tasks['simplecli'].options = Generator::Simplecli.class_options
+
+    register(Generator::MicroService, 'microservice', 'microservice NAME', 'Initialize a new microservice skeleton based on rack + grape')
+    CLI.tasks['microservice'].options = Generator::MicroService.class_options
   end
 end

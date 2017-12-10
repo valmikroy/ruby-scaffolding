@@ -11,4 +11,4 @@ puma_opts = {
   Verbose: true
 }
 
-Rack::Handler::Puma.run(RESTAPINAME::App.instance, puma_opts)
+Rack::Handler::Puma.run(<%= camel_name %>::App.instance, puma_opts)

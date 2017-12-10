@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module RESTAPINAME
+module <%= camel_name %>
   class V2
     class NS1 < Grape::API
       namespace :ns1 do
         # require 'quantum/fermions'
-        # helpers RESTAPINAME::Helpers::Fermions
+        # helpers <%= camel_name %>::Helpers::Fermions
 
         desc <<-HEREDOC
   	Namespace 1 in v2

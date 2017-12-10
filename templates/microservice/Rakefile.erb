@@ -16,7 +16,7 @@ task :environment do
 end
 
 task routes: :environment do
-  RESTAPINAME::API.routes.each do |route|
+  <%= camel_name %>::API.routes.each do |route|
     method = route.request_method.ljust(10)
     path = route.origin
     puts "     #{method} #{path}"

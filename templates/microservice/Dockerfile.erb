@@ -5,8 +5,8 @@ MAINTAINER Valmik Roy <valmikroy@gmail.com>
 RUN gem install bundle
 ADD Gemfile  .
 RUN bundle install --system
-ADD . /tmp/RESTAPINAME
-WORKDIR /tmp/RESTAPINAME
+ADD . /tmp/<%= camel_name %>
+WORKDIR /tmp/<%= camel_name %>
 
 EXPOSE 8080
 

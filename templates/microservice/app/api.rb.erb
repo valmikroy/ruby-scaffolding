@@ -2,7 +2,7 @@
 
 require 'grape-swagger'
 
-module RESTAPINAME
+module <%= camel_name %>
   class API < Grape::API
     # Formatting for this need to be fixed
     insert_after Grape::Middleware::Formatter, Grape::Middleware::Logger
@@ -44,8 +44,8 @@ module RESTAPINAME
     end
 
     prefix :api
-    mount ::RESTAPINAME::Health
-    mount ::RESTAPINAME::V1
-    mount ::RESTAPINAME::V2
+    mount ::<%= camel_name %>::Health
+    mount ::<%= camel_name %>::V1
+    mount ::<%= camel_name %>::V2
   end
 end

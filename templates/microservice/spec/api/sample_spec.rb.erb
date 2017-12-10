@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe RESTAPINAME::API do
+describe <%= camel_name %>::API do
   include Rack::Test::Methods
 
   def app
-    RESTAPINAME::API
+    <%= camel_name %>::API
   end
 
   it 'only_in_v1' do
