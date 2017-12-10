@@ -23,7 +23,7 @@ module Scaffold
                    aliases: '-p',
                    desc: 'The path to create the Microservice project',
                    type: :string,
-                   default: '.'
+                   default: '../'
 
       class << self
         def source_root
