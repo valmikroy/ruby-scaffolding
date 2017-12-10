@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+module <%= camel_name %>
+  class V2
+    class NS1
+      class NS21 < Grape::API
+        namespace :ns21 do
+          desc <<-HEREDOC
+  	Name space 2 1 in v2
+          HEREDOC
+          get '/' do
+            ok 200, 'NS21v2 ' + ENV['EXAMPLE_APP_VAR1']
+          end
+
+          get '/only_in_v2' do
+            ok 200, 'NS21v2 only in V2'
+          end
+        end
+      end
+    end
+  end
+end

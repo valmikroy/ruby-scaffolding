@@ -1,0 +1,26 @@
+# frozen_string_literal: true
+
+module <%= camel_name %>
+  class V2
+    class NS1 < Grape::API
+      namespace :ns1 do
+        # require 'quantum/fermions'
+        # helpers <%= camel_name %>::Helpers::Fermions
+
+        desc <<-HEREDOC
+  	Namespace 1 in v2
+  HEREDOC
+        get '/' do
+          ok 200, 'NS1v2'
+        end
+
+        Dir[File.expand_path('../ns2/*.rb', __FILE__)].each do |handler|
+          require handler
+        end
+
+        mount NS21
+        mount NS22
+      end
+    end
+  end
+end

@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module <%= camel_name %>
+  class V2
+    class NS1
+      class NS22 < Grape::API
+        namespace :ns22 do
+          desc <<-HEREDOC
+  	Name space 2 2 in v2
+          HEREDOC
+          get '/' do
+            ok 200, 'NS22v2'
+          end
+          get '/v1_unavailable' do
+            ok 200, 'only available in v1'
+          end
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,17 @@
+module <%= camel_name %>
+  class V2 < Grape::API
+    format :json
+    version 'v2', using: :path, vendor: '<%= snake_name %>', format: :json
+
+    desc 'Returns the current API version, v2.'
+    get '/' do
+      ok 200, 'v2'
+    end
+
+    Dir[File.expand_path('../../api/ns1/v2/*.rb', __FILE__)].each do |handler|
+      require handler
+    end
+    mount NS1
+    add_swagger_documentation
+  end
+end

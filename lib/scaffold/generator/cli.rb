@@ -23,7 +23,7 @@ module Scaffold
                    aliases: '-p',
                    desc: 'The path to create the Omnibus project',
                    type: :string,
-                   default: '.'
+                   default: '../'
 
       class << self
         def source_root
@@ -47,16 +47,26 @@ module Scaffold
         template('spec/sample_spec.rb.erb', "#{target_path}/spec/sample_spec.rb", template_options)
         template('spec/cli/command_spec.rb.erb', "#{target_path}/spec/cli/command_spec.rb", template_options)
 
-        copy_file("#{Scaffold.source_root}/templates/cli/spec/resources/sample.erb", "#{target_path}/spec/resources/sample.erb")
-        copy_file("#{Scaffold.source_root}/resources/Gemfile", "#{target_path}/Gemfile")
-        copy_file("#{Scaffold.source_root}/resources/gitignore", "#{target_path}/.gitignore")
-        copy_file("#{Scaffold.source_root}/resources/rubocop.yml", "#{target_path}/.rubocop.yml")
+        wrap_copy_file('spec/resources/sample.erb')
+        wrap_copy_file('Gemfile')
+        wrap_copy_file('.gitignore')
+        wrap_copy_file('rubocop.yml')
+        wrap_copy_file('Rakefile')
+
+
         create_file("#{target_path}/.rubocop_todo.yml")
-        copy_file("#{Scaffold.source_root}/resources/Rakefile", "#{target_path}/Rakefile")
         copy_file("#{Scaffold.source_root}/resources/LICENSE", "#{target_path}/LICENSE")
       end
 
       private
+
+      def wrap_copy_file(path)
+        copy_file("#{Cli.source_root}/#{path}","#{target_path}/#{path}")
+      end
+
+      #def wrap_template(path)
+      #  template("#{path}.erb", "#{target_path}/#{path}", template_options )
+      #end
 
       def target_path
         @target_path ||= File.join(File.expand_path(@options[:path]), "rubycli-#{name}")

@@ -4,10 +4,11 @@ require 'thor'
 require 'scaffold'
 require 'scaffold/generator/cli'
 require 'scaffold/generator/simplecli'
+require 'scaffold/generator/microservice'
 require 'scaffold/version'
 
 module Scaffold
-  class Cli < Thor
+  class CLI < Thor
     check_unknown_options!
     class_option 'verbose', type: :boolean, default: false
 
@@ -23,11 +24,12 @@ module Scaffold
     end
 
     register(Generator::Cli, 'cli', 'cli NAME', 'Initialize a new CLI project')
-    Cli.tasks['cli'].options = Generator::Cli.class_options
+    CLI.tasks['cli'].options = Generator::Cli.class_options
 
-    register(Generator::Cli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
-    Cli.tasks['simplecli'].options = Generator::Cli.class_options
+    register(Generator::Simplecli, 'simplecli', 'simplecli NAME', 'Initialize a new Simple CLI skeleton')
+    CLI.tasks['simplecli'].options = Generator::Simplecli.class_options
 
+    register(Generator::MicroService, 'microservice', 'microservice NAME', 'Initialize a new microservice skeleton based on rack + grape')
+    CLI.tasks['microservice'].options = Generator::MicroService.class_options
   end
-
 end
