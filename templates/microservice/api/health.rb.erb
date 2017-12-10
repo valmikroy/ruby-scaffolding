@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+module RESTAPINAME
+  class Health < Grape::API
+    get '/health' do
+      ok "Health ok with debug param #{params[:debug]}"
+    end
+  end
+end

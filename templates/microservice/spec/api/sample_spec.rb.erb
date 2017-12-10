@@ -1,0 +1,23 @@
+require 'spec_helper'
+
+describe RESTAPINAME::API do
+  include Rack::Test::Methods
+
+  def app
+    RESTAPINAME::API
+  end
+
+  it 'only_in_v1' do
+    get '/api/v1/ns1/ns21/only_in_v1'
+    expect(last_response.status).to eq(200)
+    expect(last_response.body).to eq({"OK": "NS21v1 only in V1"}.to_json)
+  end
+
+  it 'only_in_v2' do
+    get '/api/v2/ns1/ns21/only_in_v2'
+    expect(last_response.status).to eq(200)
+    expect(last_response.body).to eq({"OK":"NS21v2 only in V2"}.to_json)
+  end
+
+
+end

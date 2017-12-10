@@ -1,0 +1,30 @@
+# frozen_string_literal: true
+
+module RESTAPINAME
+  class V1
+    class NS1 < Grape::API
+      namespace :ns1 do
+        desc <<-HEREDOC
+        	name space 1 in v1
+        HEREDOC
+        get '/' do
+          ok 200, 'NS1v1'
+        end
+
+        # example curl for below endpoint
+        # curl -H "Content-Type: application/json"  -X POST -d '{"key1":"value1", "key2":"value2"}'  127.0.0.1:8080/api/v1/ns1/ns2/action2
+        # curl   -X POST -d   "key1=value1&key2=value2"  127.0.0.1:8080/api/v1/ns1/ns2/action2
+        post '/post' do
+          ok 200, "post #{params['key1']}   #{params['key2']} only in v1"
+        end
+
+        Dir[File.expand_path('../ns2/*.rb', __FILE__)].each do |handler|
+          require handler
+        end
+
+        mount NS21
+        mount NS22
+      end
+    end
+  end
+end

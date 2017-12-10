@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module RESTAPINAME
+  class V1
+    class NS1
+      class NS22 < Grape::API
+        namespace :ns22 do
+          desc <<-HEREDOC
+  	Name space 2 2 in v1
+          HEREDOC
+          get '/' do
+            ok 200, 'NS22v1'
+          end
+          get '/v1_unavailable' do
+            failed 404, 'Unavailable in v1 , check v2'
+          end
+        end
+      end
+    end
+  end
+end
