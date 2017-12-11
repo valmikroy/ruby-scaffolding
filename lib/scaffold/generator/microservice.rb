@@ -53,6 +53,8 @@ module Scaffold
         wrap_template('api/ns1/v2/ns2/ns21.rb')
         wrap_template('api/ns1/v2/ns2/ns22.rb')
 
+        #TODO introduce helper functions in template
+
         wrap_template('Rakefile')
         wrap_template('Dockerfile')
         wrap_template('config.ru')

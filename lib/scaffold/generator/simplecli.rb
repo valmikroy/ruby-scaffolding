@@ -37,6 +37,7 @@ module Scaffold
 
         template('spec/spec_helper.rb.erb', "#{target_path}/spec/spec_helper.rb", template_options)
         template('spec/name_spec.rb.erb', "#{target_path}/spec/#{snake_name}_spec.rb", template_options)
+        template('README.md.erb', "#{target_path}/README.md", template_options)
 
         wrap_copy_file('Gemfile')
         wrap_copy_file('.gitignore')
