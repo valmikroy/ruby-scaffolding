@@ -1,0 +1,24 @@
+# rubycli-<%= snake_name %>
+This simple CLI structure creates `thor` based CLI utility in single file. This is useful to write quick throw away CLI script. 
+
+## structure
+```
+rubycli-<%= snake_name %>
+├── Gemfile
+├── LICENSE
+├── Rakefile
+├── bin
+│   └── <%= snake_name %>.rb
+├── rubocop.yml
+└── spec
+    ├── <%= snake_name %>_spec.rb
+    └── spec_helper.rb
+
+```
+
+In above structure , `bin/<%= snake_name %>.rb` has been divided logically in three sections
+- Singleton (self) which initialize logger and other global variables.
+- `Helpers` which can hold all helpers to build action flow.
+- `CLI` which holds entry points for each type of flow respective to given command line.
+
+It also drops `spec/<%= snake_name %>_spec.rb` which can be fleshed out during development.
