@@ -21,7 +21,7 @@ module Scaffold
       class_option :path,
                    banner: 'PATH',
                    aliases: '-p',
-                   desc: 'The path to create the Omnibus project',
+                   desc: 'The path to create this simplecli project',
                    type: :string,
                    default: '../'
 

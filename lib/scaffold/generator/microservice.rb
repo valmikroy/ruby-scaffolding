@@ -21,7 +21,7 @@ module Scaffold
       class_option :path,
                    banner: 'PATH',
                    aliases: '-p',
-                   desc: 'The path to create the Microservice project',
+                   desc: 'The path to create the microservice project',
                    type: :string,
                    default: '../'
 
