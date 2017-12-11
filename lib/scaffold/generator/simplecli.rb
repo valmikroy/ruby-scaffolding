@@ -38,16 +38,20 @@ module Scaffold
         template('spec/spec_helper.rb.erb', "#{target_path}/spec/spec_helper.rb", template_options)
         template('spec/name_spec.rb.erb', "#{target_path}/spec/#{snake_name}_spec.rb", template_options)
 
-        copy_file("#{Simplecli.source_root}/Gemfile", "#{target_path}/Gemfile")
-        copy_file("#{Simplecli.source_root}/gitignore", "#{target_path}/.gitignore")
-        copy_file("#{Simplecli.source_root}/rubocop.yml", "#{target_path}/.rubocop.yml")
-        create_file("#{target_path}/.rubocop_todo.yml")
-        copy_file("#{Simplecli.source_root}/Rakefile", "#{target_path}/Rakefile")
+        wrap_copy_file('Gemfile')
+        wrap_copy_file('.gitignore')
+        wrap_copy_file('rubocop.yml')
+        wrap_copy_file('Rakefile')
 
+        create_file("#{target_path}/.rubocop_todo.yml")
         copy_file("#{Scaffold.source_root}/resources/LICENSE", "#{target_path}/LICENSE")
       end
 
       private
+
+      def wrap_copy_file(path)
+        copy_file("#{Simplecli.source_root}/#{path}","#{target_path}/#{path}")
+      end
 
       def target_path
         @target_path ||= File.join(File.expand_path(@options[:path]), "rubycli-#{name}")
