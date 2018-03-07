@@ -13,6 +13,7 @@ group :build do
 end
 group :development do
   gem 'rspec'
+  gem 'rake-notes'
   gem 'rubocop'
   gem 'rubocop-rspec'
 end
